@@ -1,0 +1,30 @@
+{
+  "spec_version": 1,
+  "welcome_seen_at": "2026-09-30T22:15:00+08:00",
+  "last_visit_at": "2026-10-02T09:00:00+08:00",
+  "known_cards": ["finished", "answered", "checked", "reading"],
+  "seen_content_version": "2026-10-02.2",
+  "future_metadata": {"preserve": [1, "不删"]},
+  "cards": {
+    "finished": {
+      "status": "done", "done_at": "2026-10-01T09:00:00+08:00",
+      "summary": "已完成卡片", "ui": {"phase": "wrap", "anchor": "summary", "unknown": "保留"}
+    },
+    "answered": {
+      "status": "in_progress", "questions": {"q1": {"my_answer": "变量保存结果", "self_mark": "wrong"}},
+      "summary": "回答还没有标对", "ui": {"phase": "practice", "anchor": "q1"}
+    },
+    "checked": {
+      "status": "in_progress", "checks": {"c1": {"attempts": [{"value": "8", "correct": false, "at": "2026-10-02T09:00:00+08:00"}]}},
+      "solution_viewed": false
+    },
+    "reading": {
+      "status": "in_progress", "questions": {}, "checks": {},
+      "ui": {"phase": "practice", "anchor": "free-navigation"}, "summary": ""
+    },
+    "retired-and-unknown": {
+      "status": "done", "summary": "课程不再显示，记录继续保留", "extension": {"a": true}
+    }
+  },
+  "events": [{"at": "2026-10-01T09:00:00+08:00", "type": "card_done", "card": "finished"}]
+}

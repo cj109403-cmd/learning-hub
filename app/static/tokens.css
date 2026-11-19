@@ -1,0 +1,244 @@
+/*
+ * 学习工作台 design tokens  v2.4（2026-10-03）
+ *   v2.4：新增按钮尺寸 --control-height / --control-height-lg 和按下缩放 --press-scale
+ *         （第三轮打磨时按钮高度误借了间距变量 --space-10）
+ *   v2.3：新增 --radius-inline（4px），给行内代码和键帽用（原来误借了间距变量 --space-1）
+ *   v2.2：字体栈补上 Windows 的对应字体（Segoe UI、微软雅黑、Cascadia Mono、宋体），为 Windows 版做准备
+ *   v2.1：新增 --accent-fill / --accent-fill-hover，专门给实心按钮用（清透深色下
+ *         --accent 上放白字对比度只有 3.0，不达标）
+ *
+ * 两套主题 × 浅色/深色：
+ *   data-theme="paper"（默认，纸页）  /  data-theme="clear"（清透）
+ *   data-mode="light" | "dark"；不设置 data-mode 时跟随系统
+ * 用户偏好：data-reading="sans" | "serif"（正文字体），data-size="m" | "l"（字号）
+ *
+ * 规则：组件只能引用这些变量，不许写死颜色、字号、间距、圆角、时长、缓动。
+ * 所有文字颜色已按 WCAG AA 校验（在 --bg、--bg-subtle、--bg-raised 三种背景上都 ≥ 4.5:1）。
+ */
+
+/* ============ 与主题无关的基础 token ============ */
+:root {
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+               "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei",
+               "Helvetica Neue", sans-serif;
+  --font-sans-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC",
+               "Segoe UI Variable Display", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei",
+               "Helvetica Neue", sans-serif;
+  --font-serif: "Iowan Old Style", "Charter", Georgia, "Songti SC", "STSong",
+               "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, "Cascadia Mono", Consolas, monospace;
+
+  /* 字号 / 行高（桌面端；窗口 < 900px 时见文末） */
+  --fs-hero: 56px;     --lh-hero: 1.08;    /* 首页主标题、欢迎页 */
+  --fs-display: 40px;  --lh-display: 1.15; /* 页面标题、卡片标题 */
+  --fs-title: 28px;    --lh-title: 1.25;   /* 阶段标题（学 / 练 / 结）、大区块标题 */
+  --fs-heading: 21px;  --lh-heading: 1.4;  /* 讲解里的 ### 小标题、卡片列表标题 */
+  --fs-lead: 19px;     --lh-lead: 1.65;    /* 副标题、导语、导师消息 */
+  --fs-body: 17px;     --lh-body: 1.8;     /* 正文（中文阅读） */
+  --fs-small: 15px;    --lh-small: 1.6;    /* 次要信息、说明 */
+  --fs-caption: 13px;  --lh-caption: 1.5;  /* 元信息、时长、状态 */
+  --fs-micro: 12px;    --lh-micro: 1.4;    /* 键盘提示、徽标（不用于正文信息） */
+  --fs-code: 15px;     --lh-code: 1.65;
+
+  --tracking-hero: -0.022em;   /* 只对西文和数字生效明显；中文不受影响 */
+  --tracking-display: -0.015em;
+  --tracking-title: -0.01em;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* 间距（只用这些） */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 20px;  --space-6: 24px;  --space-8: 32px;  --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+  --space-32: 128px;
+
+  /* 布局 */
+  --shell-max: 1200px;      /* 首页、路线、课题组等概览页的最大内容宽度 */
+  --read-width: 720px;      /* 卡片正文阅读列（17px 中文约 42 字一行） */
+  --rail-width: 220px;      /* 卡片页左侧目录 */
+  --sidebar-width: 248px;
+  --topbar-height: 56px;
+
+  /* 控件尺寸 */
+  --control-height: 40px;      /* 常规按钮、输入框 */
+  --control-height-lg: 48px;   /* 每屏唯一的主行动 */
+  --press-scale: 0.97;         /* 按下时的缩放 */
+
+  /* 圆角 */
+  --radius-inline: 4px;     /* 行内代码、键盘提示的键帽 */
+  --radius-control: 8px;    /* 按钮、输入框、小标签 */
+  --radius-card: 12px;      /* 普通卡片、代码块 */
+  --radius-panel: 18px;     /* 首页主卡、浮层、视频 */
+  --radius-pill: 999px;
+
+  /* 动效 */
+  --dur-instant: 100ms;     /* 按下反馈 */
+  --dur-fast: 160ms;        /* 悬停、颜色变化 */
+  --dur-base: 240ms;        /* 展开收起、阶段切换 */
+  --dur-slow: 420ms;        /* 页面转场、完成动效 */
+  --dur-slower: 700ms;      /* 首次进入首页的错落出现（每次启动只播一次） */
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);        /* 进入、展开：快起慢停 */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);    /* 位置互换、转场 */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);      /* 一般状态变化 */
+  /* 实心按钮的底色：默认跟随强调色；清透深色单独指定（见下方） */
+  --accent-fill: var(--accent);
+  --accent-fill-hover: var(--accent-hover);
+
+  /* 弹簧：只用于浮层出现、对勾、计数变化这类"小而有生命"的瞬间 */
+  --spring-gentle: linear(0, 0.025, 0.089, 0.175, 0.273, 0.375, 0.473, 0.566, 0.649, 0.723, 0.786, 0.839, 0.883, 0.919, 0.947, 0.968, 0.985, 0.997, 1.005, 1.01, 1.013, 1.015, 1.015, 1.015, 1);
+  --spring-lively: linear(0, 0.045, 0.155, 0.302, 0.46, 0.614, 0.751, 0.865, 0.954, 1.019, 1.062, 1.085, 1.094, 1.093, 1.084, 1.07, 1.056, 1.041, 1.027, 1.016, 1.007, 1, 0.995, 0.992, 1);
+}
+
+/* 正文字体偏好 */
+:root,
+:root[data-reading="sans"] { --font-reading: var(--font-sans); }
+:root[data-reading="serif"] { --font-reading: var(--font-serif); }
+
+/* 字号偏好：大 */
+:root[data-size="l"] {
+  --fs-body: 18.5px;  --lh-body: 1.8;
+  --fs-lead: 20.5px;
+  --fs-small: 16px;
+  --fs-code: 16px;
+}
+
+/* ============ 纸页 paper · 浅色（默认） ============ */
+:root,
+:root[data-theme="paper"] {
+  --bg: #FAF8F3;
+  --bg-subtle: #F2EFE7;     /* 侧栏、代码块、次级区域 */
+  --bg-raised: #FFFDF9;     /* 卡片、输入框、浮层 */
+  --bg-hover: #ECE8DE;
+  --bg-pressed: #E4DFD3;
+  --text: #1C1A16;
+  --text-secondary: #5A554B;
+  --text-tertiary: #6C665A;
+  --line: #E3DED2;
+  --line-strong: #CFC8B8;
+  --accent: #B0502C;        /* 赤陶色：当前、下一步、主按钮、链接 */
+  --accent-hover: #963F20;
+  --accent-soft: rgba(176, 80, 44, 0.10);
+  --on-accent: #FFFDF9;
+  --ok: #2F7650;   --ok-soft: rgba(47, 118, 80, 0.10);
+  --err: #B23A2F;  --err-soft: rgba(178, 58, 47, 0.08);
+  --track-a: #4E72A0;       /* Python：石板蓝 */
+  --track-b: #5B8053;       /* 统计：鼠尾草绿 */
+  --track-c: #A0742A;       /* 数据：赭石黄 */
+  --display-font: var(--font-serif);   /* 纸页主题：大标题用衬线，有"刊物"感 */
+  --display-weight: var(--fw-medium);
+  --shadow-float: 0 1px 0 rgba(28, 26, 22, 0.04), 0 12px 32px -12px rgba(28, 26, 22, 0.18);
+  --shadow-hero: 0 1px 0 rgba(28, 26, 22, 0.04), 0 18px 40px -24px rgba(28, 26, 22, 0.22);
+  --selection: rgba(176, 80, 44, 0.18);
+  color-scheme: light;
+}
+
+/* ============ 纸页 paper · 深色 ============ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]):not([data-theme="clear"]) {
+    --bg: #1A1917; --bg-subtle: #22201D; --bg-raised: #272522;
+    --bg-hover: #2E2C27; --bg-pressed: #36332D;
+    --text: #EDEAE2; --text-secondary: #ADA798; --text-tertiary: #958F82;
+    --line: #36332D; --line-strong: #4A463E;
+    --accent: #E2906C; --accent-hover: #ECA586; --accent-soft: rgba(226, 144, 108, 0.14);
+    --on-accent: #1A1917;
+    --ok: #6CC08F; --ok-soft: rgba(108, 192, 143, 0.13);
+    --err: #F07D70; --err-soft: rgba(240, 125, 112, 0.12);
+    --track-a: #86A5CF; --track-b: #93B486; --track-c: #D6AA5E;
+    --shadow-float: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+    --shadow-hero: 0 1px 0 rgba(0, 0, 0, 0.3), 0 20px 48px -24px rgba(0, 0, 0, 0.7);
+    --selection: rgba(226, 144, 108, 0.25);
+    color-scheme: dark;
+  }
+}
+:root[data-mode="dark"]:not([data-theme="clear"]) {
+  --bg: #1A1917; --bg-subtle: #22201D; --bg-raised: #272522;
+  --bg-hover: #2E2C27; --bg-pressed: #36332D;
+  --text: #EDEAE2; --text-secondary: #ADA798; --text-tertiary: #958F82;
+  --line: #36332D; --line-strong: #4A463E;
+  --accent: #E2906C; --accent-hover: #ECA586; --accent-soft: rgba(226, 144, 108, 0.14);
+  --on-accent: #1A1917;
+  --ok: #6CC08F; --ok-soft: rgba(108, 192, 143, 0.13);
+  --err: #F07D70; --err-soft: rgba(240, 125, 112, 0.12);
+  --track-a: #86A5CF; --track-b: #93B486; --track-c: #D6AA5E;
+  --shadow-float: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+  --shadow-hero: 0 1px 0 rgba(0, 0, 0, 0.3), 0 20px 48px -24px rgba(0, 0, 0, 0.7);
+  --selection: rgba(226, 144, 108, 0.25);
+  color-scheme: dark;
+}
+
+/* ============ 清透 clear · 浅色 ============ */
+:root[data-theme="clear"] {
+  --bg: #FFFFFF; --bg-subtle: #F5F5F7; --bg-raised: #FFFFFF;
+  --bg-hover: #EDEDF0; --bg-pressed: #E3E3E8;
+  --text: #1D1D1F; --text-secondary: #5E5E63; --text-tertiary: #6E6E73;
+  --line: #E5E5EA; --line-strong: #D1D1D6;
+  --accent: #0066CC; --accent-hover: #0055AA; --accent-soft: rgba(0, 102, 204, 0.10);
+  --on-accent: #FFFFFF;
+  --ok: #257A4B; --ok-soft: rgba(37, 122, 75, 0.10);
+  --err: #C93C37; --err-soft: rgba(201, 60, 55, 0.08);
+  --track-a: #4A72C4; --track-b: #2F8A7E; --track-c: #A97A26;
+  --display-font: var(--font-sans-display);   /* 清透主题：大标题用 SF 无衬线，紧字距 */
+  --display-weight: var(--fw-semibold);
+  --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.05), 0 12px 32px -12px rgba(0, 0, 0, 0.16);
+  --shadow-hero: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.20);
+  --selection: rgba(0, 102, 204, 0.16);
+  color-scheme: light;
+}
+
+/* ============ 清透 clear · 深色 ============ */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="clear"]:not([data-mode="light"]) {
+    --bg: #111113; --bg-subtle: #1C1C1E; --bg-raised: #1C1C1E;
+    --bg-hover: #2C2C2E; --bg-pressed: #3A3A3C;
+    --text: #F5F5F7; --text-secondary: #A1A1A6; --text-tertiary: #8E8E93;
+    --line: #2C2C2E; --line-strong: #3A3A3C;
+    --accent: #2997FF; --accent-hover: #4FAAFF; --accent-soft: rgba(41, 151, 255, 0.15);
+    --on-accent: #FFFFFF;
+    --accent-fill: #0071E3; --accent-fill-hover: #0066CC;   /* 白字对比度 4.7 / 5.6 */
+    --ok: #4CC38A; --ok-soft: rgba(76, 195, 138, 0.13);
+    --err: #FF6B66; --err-soft: rgba(255, 107, 102, 0.12);
+    --track-a: #7E9CEB; --track-b: #4FB3A5; --track-c: #D9A44A;
+    --shadow-float: 0 1px 0 rgba(0, 0, 0, 0.4), 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+    --shadow-hero: 0 1px 0 rgba(0, 0, 0, 0.4), 0 20px 48px -24px rgba(0, 0, 0, 0.8);
+    --selection: rgba(41, 151, 255, 0.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="clear"][data-mode="dark"] {
+  --bg: #111113; --bg-subtle: #1C1C1E; --bg-raised: #1C1C1E;
+  --bg-hover: #2C2C2E; --bg-pressed: #3A3A3C;
+  --text: #F5F5F7; --text-secondary: #A1A1A6; --text-tertiary: #8E8E93;
+  --line: #2C2C2E; --line-strong: #3A3A3C;
+  --accent: #2997FF; --accent-hover: #4FAAFF; --accent-soft: rgba(41, 151, 255, 0.15);
+  --on-accent: #FFFFFF;
+  --accent-fill: #0071E3; --accent-fill-hover: #0066CC;   /* 白字对比度 4.7 / 5.6 */
+  --ok: #4CC38A; --ok-soft: rgba(76, 195, 138, 0.13);
+  --err: #FF6B66; --err-soft: rgba(255, 107, 102, 0.12);
+  --track-a: #7E9CEB; --track-b: #4FB3A5; --track-c: #D9A44A;
+  --shadow-float: 0 1px 0 rgba(0, 0, 0, 0.4), 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+  --shadow-hero: 0 1px 0 rgba(0, 0, 0, 0.4), 0 20px 48px -24px rgba(0, 0, 0, 0.8);
+  --selection: rgba(41, 151, 255, 0.25);
+  color-scheme: dark;
+}
+
+/* ============ 窄窗口（< 900px） ============ */
+@media (max-width: 899px) {
+  :root {
+    --fs-hero: 40px;
+    --fs-display: 32px;
+    --fs-title: 24px;
+  }
+}
+
+/* ============ 减弱动态效果 ============ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms; --dur-fast: 0ms; --dur-base: 0ms;
+    --dur-slow: 0ms; --dur-slower: 0ms;
+  }
+}

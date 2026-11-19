@@ -1,0 +1,41 @@
+/progress/
+/workspace/
+/backups/
+/app/preview/screenshots/
+.DS_Store
+__pycache__/
+/learning-hub-update-*.zip
+/app/verification/screenshots/
+
+/logs/
+/学习台.app/
+/app/macos/build/
+/app/distribution/dist/
+/app/verification/polish/
+/.impeccable/
+
+# Local verification output, screenshots, and duplicate icon inputs.
+/app/verification/
+screenshots/
+/*.png
+/*.ico
+
+# Generated archives, applications, logs, and Python caches.
+*.zip
+*.app/
+*.log
+*.py[cod]
+.venv/
+venv/
+
+# Local credentials and private keys.
+.env
+.env.*
+.ssh/
+.netrc
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json

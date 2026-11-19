@@ -1,0 +1,22 @@
+spec_version: 1
+content_version: "2026-11-19.1"
+lab:
+  name: 示例课题组
+  fictional: true
+people:
+  - { id: mentor, name: 示例导师, role: 带你走完这门示例课, initial: 示 }
+welcome:
+  from: mentor
+  message: |
+    欢迎！这是一门只有三张卡的示例课，用来演示学习台怎么用：读讲解、做自测、完成一个小任务。
+
+    想学自己的内容时，按 docs/CONTENT_SPEC.md 的格式写好课程，替换 content/ 和 data/ 就行。
+tracks:
+  - id: basics
+    label: A
+    title: 入门
+    summary: 三张卡，走一遍学习台的完整流程。
+    cards:
+      - demo-how-to-learn
+      - demo-first-python
+      - demo-average

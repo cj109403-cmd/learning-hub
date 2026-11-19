@@ -1,0 +1,32 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest, python: "3.11" }
+          - { os: macos-latest, python: "3.13" }
+          - { os: windows-latest, python: "3.9" }
+          - { os: windows-latest, python: "3.13" }
+    runs-on: ${{ matrix.os }}
+    env:
+      # The course checker prints Chinese; Windows runners default to a Western code page.
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit tests (no packages to install)
+        run: python -B -m unittest discover app/tests -v
+      - name: Course format check
+        run: python -B tools/validate_content.py
+        env:
+          PYTHONPATH: app/vendor_py

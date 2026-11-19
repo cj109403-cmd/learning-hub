@@ -1,0 +1,8 @@
+{
+  "card": "demo-average",
+  "checks": {
+    "c1": 0.52,
+    "c2": "c",
+    "c3": 5
+  }
+}

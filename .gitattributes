@@ -1,0 +1,23 @@
+# Store text as LF and check it out consistently on macOS and Windows.
+* text=auto eol=lf
+
+# The course checker must stay byte-identical on every platform.
+tools/validate_content.py text eol=lf
+*.py text eol=lf
+*.pyw text eol=lf
+*.sh text eol=lf
+*.command text eol=lf
+
+# PowerShell scripts use CRLF on checkout; Git still stores LF.
+*.ps1 text eol=crlf
+
+# Binary assets must remain byte-for-byte unchanged.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.icns binary
+*.pdf binary
+*.zip binary
