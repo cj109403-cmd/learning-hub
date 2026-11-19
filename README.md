@@ -6,7 +6,7 @@
 
 课程是普通的 Markdown + YAML 文件，可以自己写，也可以让 AI 按格式生成；程序负责解锁顺序、自测、带数据的小任务和自动判题，以及“今天学什么”的推荐。支持 Mac 和 Windows。
 
-![今天：推荐下一张卡，显示路线进度](docs/screenshots/today.png)
+![今天：推荐下一张卡，显示路线进度](docs/images/today.png)
 
 ## 特点
 
@@ -20,11 +20,11 @@
 
 | 练：先写想法，再对照答案 | 任务：用数据回答问题，自动判题 |
 |---|---|
-| ![自测题](docs/screenshots/practice.png) | ![任务卡](docs/screenshots/task.png) |
+| ![自测题](docs/images/practice.png) | ![任务卡](docs/images/task.png) |
 
 还有浅色、深色两种外观，以及“清透”“纸页”两套主题：
 
-![深色模式下的“纸页”主题](docs/screenshots/dark.png)
+![深色模式下的“纸页”主题](docs/images/dark.png)
 
 ## 开始使用
 

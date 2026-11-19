@@ -6,7 +6,7 @@ An offline, local-first study desk. A course is split into cards, and every card
 
 Courses are plain Markdown + YAML files that you can write yourself or have an AI write to the format. The app takes care of the unlocking order, self-check questions, small data tasks with automatic grading, and a "what to study today" suggestion. It runs on macOS and Windows. **The interface is in Chinese.**
 
-![Today: the next card to study and progress along the route](docs/screenshots/today.png)
+![Today: the next card to study and progress along the route](docs/images/today.png)
 
 ## Features
 
@@ -20,11 +20,11 @@ Courses are plain Markdown + YAML files that you can write yourself or have an A
 
 | Practice: write your idea, then compare | Tasks: answer with data, graded locally |
 |---|---|
-| ![Self-check question](docs/screenshots/practice.png) | ![Task card](docs/screenshots/task.png) |
+| ![Self-check question](docs/images/practice.png) | ![Task card](docs/images/task.png) |
 
 Light and dark appearance, with two themes ("clear" and "paper"):
 
-![The paper theme in dark mode](docs/screenshots/dark.png)
+![The paper theme in dark mode](docs/images/dark.png)
 
 ## Getting started
 
